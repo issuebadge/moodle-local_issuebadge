@@ -24,15 +24,12 @@
 
 namespace local_issuebadge\api;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Class issuebadge_api
  *
  * Handles communication with the IssueBadge API
  */
 class issuebadge_api {
-
     /** @var string API base URL */
     private $apiurl;
 

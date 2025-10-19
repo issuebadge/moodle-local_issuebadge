@@ -32,16 +32,13 @@ use core_privacy\local\request\userlist;
 use core_privacy\local\request\writer;
 use core_privacy\local\request\transform;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Privacy provider for IssueBadge
  */
 class provider implements
     \core_privacy\local\metadata\provider,
-    \core_privacy\local\request\plugin\provider,
-    \core_privacy\local\request\core_userlist_provider {
-
+    \core_privacy\local\request\core_userlist_provider,
+    \core_privacy\local\request\plugin\provider {
     /**
      * Returns metadata about this plugin's data storage
      *
@@ -241,7 +238,7 @@ class provider implements
             return;
         }
 
-        list($insql, $inparams) = $DB->get_in_or_equal($userids, SQL_PARAMS_NAMED);
+        [$insql, $inparams] = $DB->get_in_or_equal($userids, SQL_PARAMS_NAMED);
 
         if ($context->contextlevel == CONTEXT_COURSE) {
             $params = array_merge($inparams, ['courseid' => $context->instanceid]);

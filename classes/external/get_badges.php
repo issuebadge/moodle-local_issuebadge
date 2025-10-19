@@ -38,7 +38,6 @@ use external_single_structure;
  * Get badges external function
  */
 class get_badges extends external_api {
-
     /**
      * Returns description of method parameters
      *
@@ -72,7 +71,6 @@ class get_badges extends external_api {
                 'success' => true,
                 'badges' => $badges,
             ];
-
         } catch (\Exception $e) {
             return [
                 'success' => false,

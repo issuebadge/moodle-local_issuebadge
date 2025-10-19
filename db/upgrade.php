@@ -22,8 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Execute upgrade tasks
  *
@@ -31,11 +29,8 @@ defined('MOODLE_INTERNAL') || die();
  * @return bool
  */
 function xmldb_local_issuebadge_upgrade($oldversion) {
-    global $DB;
-    $dbman = $DB->get_manager();
-
-    // Savepoint reached.
-    upgrade_plugin_savepoint(true, 2025011800, 'local', 'issuebadge');
+    // No upgrades yet - this is the initial version.
+    // Future upgrade steps will be added here.
 
     return true;
 }

@@ -24,13 +24,10 @@
 
 namespace local_issuebadge;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Event observer class
  */
 class observer {
-
     /**
      * Triggered when a user completes a course
      *
@@ -108,7 +105,6 @@ class observer {
 
             // Log success.
             debugging('Badge issued automatically for user ' . $userid . ' in course ' . $courseid, DEBUG_DEVELOPER);
-
         } catch (\Exception $e) {
             // Log error but don't throw - we don't want to break the course completion process.
             debugging('Failed to automatically issue badge: ' . $e->getMessage(), DEBUG_DEVELOPER);

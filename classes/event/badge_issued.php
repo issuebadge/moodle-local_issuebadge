@@ -24,13 +24,10 @@
 
 namespace local_issuebadge\event;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Badge issued event class
  */
 class badge_issued extends \core\event\base {
-
     /**
      * Initialize event
      */

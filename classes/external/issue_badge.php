@@ -37,7 +37,6 @@ use external_single_structure;
  * Issue badge external function
  */
 class issue_badge extends external_api {
-
     /**
      * Returns description of method parameters
      *
@@ -120,7 +119,6 @@ class issue_badge extends external_api {
                 'issueid' => $result['IssueId'],
                 'publicurl' => $result['publicUrl'],
             ];
-
         } catch (\Exception $e) {
             return [
                 'success' => false,
