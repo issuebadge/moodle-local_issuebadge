@@ -1,0 +1,89 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_issuebadge/issued_badges_table
+
+    Table displaying issued badges with pagination
+
+    Context variables required for this template:
+    * hasissues - Boolean, true if there are issued badges
+    * issues - Array of issued badge records
+    * pagination - Pagination HTML from paging bar
+
+    Example context (json):
+    {
+        "hasissues": true,
+        "issues": [
+            {
+                "recipientname": "John Doe",
+                "recipientemail": "john@example.com",
+                "coursename": "Introduction to Moodle",
+                "badgeid": "badge-123",
+                "issuedate": "22 Jan 2025",
+                "publicurl": "https://app.issuebadge.com/view/abc123"
+            }
+        ],
+        "pagination": "<div class=\"pagination\">...</div>"
+    }
+}}
+{{#hasissues}}
+<div class="local_issuebadge_table_wrapper">
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">{{#str}}recipientname, local_issuebadge{{/str}}</th>
+                    <th scope="col">{{#str}}recipientemail, local_issuebadge{{/str}}</th>
+                    <th scope="col">{{#str}}course{{/str}}</th>
+                    <th scope="col">{{#str}}badge, local_issuebadge{{/str}}</th>
+                    <th scope="col">{{#str}}issuedate, local_issuebadge{{/str}}</th>
+                    <th scope="col">{{#str}}publicurl, local_issuebadge{{/str}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#issues}}
+                <tr>
+                    <td>{{recipientname}}</td>
+                    <td>{{recipientemail}}</td>
+                    <td>{{coursename}}</td>
+                    <td><code>{{badgeid}}</code></td>
+                    <td>{{issuedate}}</td>
+                    <td>
+                        <a href="{{publicurl}}" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="icon fa fa-external-link fa-fw"></i>
+                            {{#str}}view{{/str}}
+                        </a>
+                    </td>
+                </tr>
+                {{/issues}}
+            </tbody>
+        </table>
+    </div>
+
+    {{#pagination}}
+    <div class="mt-3">
+        {{{pagination}}}
+    </div>
+    {{/pagination}}
+</div>
+{{/hasissues}}
+
+{{^hasissues}}
+<div class="alert alert-info">
+    {{#str}}nobadges, local_issuebadge{{/str}}
+</div>
+{{/hasissues}}

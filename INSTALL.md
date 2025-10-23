@@ -73,6 +73,8 @@ Before installing the IssueBadge plugin, ensure you have:
    git clone https://github.com/issuebadge/moodle-local_issuebadge.git issuebadge
    ```
 
+   **Note**: The repository follows Moodle's naming convention `moodle-{plugintype}_{pluginname}`, but must be cloned into a folder named `issuebadge` to match Moodle's expected plugin directory structure.
+
 3. **Complete Installation**
    - Visit: `Site administration → Notifications`
    - Click "Upgrade Moodle database now"
@@ -164,8 +166,10 @@ The plugin creates two database tables:
 ### Issue: "Plugin validation failed"
 
 **Solution:**
-- Ensure folder is named exactly `issuebadge` (not `local_issuebadge` or `moodle-local_issuebadge`)
-- Verify all files are in the correct directory: `/local/issuebadge/`
+- Ensure folder is named exactly `issuebadge` (not `local_issuebadge`)
+- The repository name `moodle-local_issuebadge` is for version control only
+- When installed, the plugin directory must be `/local/issuebadge/`
+- Verify all files are in the correct directory
 
 ### Issue: "Could not create database tables"
 

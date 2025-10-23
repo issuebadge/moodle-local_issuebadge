@@ -38,24 +38,9 @@ $PAGE->set_heading(get_string('issuebadgemanagement', 'local_issuebadge'));
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('issuebadgemanagement', 'local_issuebadge'));
 
-// Display links to different management pages.
-echo html_writer::start_div('local_issuebadge_dashboard');
-
-echo html_writer::tag('h3', get_string('managebadges', 'local_issuebadge'));
-echo html_writer::tag('p', get_string('managebadges', 'local_issuebadge'));
-
-$links = [
-    new moodle_url('/local/issuebadge/issue.php') => get_string('issuemanual', 'local_issuebadge'),
-    new moodle_url('/local/issuebadge/view.php') => get_string('viewissued', 'local_issuebadge'),
-    new moodle_url('/admin/settings.php', ['section' => 'local_issuebadge']) => get_string('settings', 'local_issuebadge'),
-];
-
-echo html_writer::start_tag('ul');
-foreach ($links as $url => $text) {
-    echo html_writer::tag('li', html_writer::link($url, $text));
-}
-echo html_writer::end_tag('ul');
-
-echo html_writer::end_div();
+// Render management dashboard using template.
+$dashboard = new \local_issuebadge\output\management_dashboard();
+$renderer = $PAGE->get_renderer('local_issuebadge');
+echo $renderer->render($dashboard);
 
 echo $OUTPUT->footer();

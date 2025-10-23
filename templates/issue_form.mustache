@@ -1,0 +1,90 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_issuebadge/issue_form
+
+    Badge issuance form template
+
+    Context variables required for this template:
+    * courseid - Course ID for badge issuance
+    * users - Array of enrolled users (optional, for course context)
+    * loadingtext - Loading badges text
+    * selectbadgetext - Select badge placeholder text
+    * selectusertext - Select user placeholder text
+    * issuebuttontext - Issue button text
+
+    Example context (json):
+    {
+        "courseid": 5,
+        "users": [
+            {"id": 2, "fullname": "John Doe", "email": "john@example.com"}
+        ],
+        "loadingtext": "Loading badges...",
+        "selectbadgetext": "Select a badge",
+        "selectusertext": "Select user",
+        "issuebuttontext": "Issue Badge"
+    }
+}}
+<div class="local_issuebadge_issue_form">
+    <form id="issuebadge_form" method="post">
+        {{#formurl}}
+        <input type="hidden" name="sesskey" value="{{sesskey}}">
+        {{/formurl}}
+
+        <!-- Badge Selection -->
+        <div class="form-group">
+            <label for="badge_id">{{#str}}badge, local_issuebadge{{/str}}</label>
+            <select id="badge_id" name="badge_id" class="form-control" required>
+                <!-- Options loaded via JavaScript -->
+            </select>
+            <small id="badge_loading" class="form-text text-muted">
+                {{loadingtext}}
+            </small>
+        </div>
+
+        <!-- User Selection -->
+        <div class="form-group">
+            <label for="user_id">{{#str}}selectuser, local_issuebadge{{/str}}</label>
+            {{#users}}
+            <!-- Course context: Select dropdown -->
+            <select id="user_id" name="user_id" class="form-control" required>
+                <option value="">{{selectusertext}}</option>
+                {{#users}}
+                <option value="{{id}}">{{fullname}} ({{email}})</option>
+                {{/users}}
+            </select>
+            {{/users}}
+            {{^users}}
+            <!-- System context: Number input -->
+            <input type="number" id="user_id" name="user_id" class="form-control"
+                   placeholder="User ID" required>
+            {{/users}}
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+            <button type="button" id="issue_button" class="btn btn-primary">
+                {{issuebuttontext}}
+            </button>
+            <span id="issue_spinner" class="spinner-border spinner-border-sm ml-2 d-none"
+                  role="status" aria-hidden="true"></span>
+        </div>
+
+        <!-- Result Display Area -->
+        <div id="issue_result" class="alert d-none" role="alert"></div>
+    </form>
+</div>

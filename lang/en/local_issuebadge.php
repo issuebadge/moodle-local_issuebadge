@@ -54,6 +54,7 @@ $string['issuedate'] = 'Issue date';
 $string['issuemanual'] = 'Issue Badge Manually';
 $string['loadingbadges'] = 'Loading badges...';
 $string['managebadges'] = 'Manage Badges';
+$string['managebadges_desc'] = 'Manage badge issuance and view issued badges from this dashboard.';
 $string['nobadges'] = 'No badges available. Please check your API configuration.';
 $string['nousersselected'] = 'No users selected';
 $string['pluginname'] = 'IssueBadge';

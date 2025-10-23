@@ -73,10 +73,11 @@ function local_issuebadge_extend_settings_navigation(settings_navigation $naviga
 /**
  * Get configured API key
  *
- * @return string|null
+ * @return string|false
  */
 function local_issuebadge_get_api_key() {
-    return get_config('local_issuebadge', 'apikey');
+    $key = get_config('local_issuebadge', 'apikey');
+    return $key ? $key : false;
 }
 
 /**

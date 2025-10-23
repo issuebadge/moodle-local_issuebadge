@@ -21,7 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/ajax', 'core/notification'], function($, Ajax, Notification) {
+define(['jquery', 'core/ajax', 'core/notification', 'core/str'], function($, Ajax, Notification, Str) {
 
     return {
         /**
@@ -56,10 +56,13 @@ define(['jquery', 'core/ajax', 'core/notification'], function($, Ajax, Notificat
 
             promises[0].done(function(response) {
                 badgeSelect.empty();
-                badgeSelect.append($('<option>', {
-                    value: '',
-                    text: M.util.get_string('selectbadge', 'local_issuebadge')
-                }));
+
+                Str.get_string('selectbadge', 'local_issuebadge').done(function(selectBadgeStr) {
+                    badgeSelect.append($('<option>', {
+                        value: '',
+                        text: selectBadgeStr
+                    }));
+                });
 
                 if (response.success && response.badges && response.badges.length > 0) {
                     response.badges.forEach(function(badge) {
@@ -70,15 +73,17 @@ define(['jquery', 'core/ajax', 'core/notification'], function($, Ajax, Notificat
                     });
                     loadingText.hide();
                 } else {
-                    loadingText.text(M.util.get_string('nobadges', 'local_issuebadge'))
-                        .addClass('text-danger');
+                    Str.get_string('nobadges', 'local_issuebadge').done(function(noBadgesStr) {
+                        loadingText.text(noBadgesStr).addClass('text-danger');
+                    });
                 }
 
                 badgeSelect.prop('disabled', false);
 
             }).fail(function(ex) {
-                loadingText.text(M.util.get_string('error_api', 'local_issuebadge'))
-                    .addClass('text-danger');
+                Str.get_string('error_api', 'local_issuebadge').done(function(errorStr) {
+                    loadingText.text(errorStr).addClass('text-danger');
+                });
                 Notification.exception(ex);
             });
         },
@@ -97,14 +102,16 @@ define(['jquery', 'core/ajax', 'core/notification'], function($, Ajax, Notificat
 
             // Validate inputs.
             if (!badgeid) {
-                result.removeClass('d-none alert-success').addClass('alert-danger')
-                    .text(M.util.get_string('error_missingdata', 'local_issuebadge'));
+                Str.get_string('error_missingdata', 'local_issuebadge').done(function(errorStr) {
+                    result.removeClass('d-none alert-success').addClass('alert-danger').text(errorStr);
+                });
                 return;
             }
 
             if (!userid) {
-                result.removeClass('d-none alert-success').addClass('alert-danger')
-                    .text(M.util.get_string('error_missingdata', 'local_issuebadge'));
+                Str.get_string('error_missingdata', 'local_issuebadge').done(function(errorStr) {
+                    result.removeClass('d-none alert-success').addClass('alert-danger').text(errorStr);
+                });
                 return;
             }
 
@@ -127,31 +134,36 @@ define(['jquery', 'core/ajax', 'core/notification'], function($, Ajax, Notificat
                 spinner.addClass('d-none');
 
                 if (response.success) {
-                    result.removeClass('d-none alert-danger').addClass('alert-success')
-                        .html(
-                            '<strong>' + M.util.get_string('badgeissued', 'local_issuebadge') + '</strong><br>' +
-                            'Issue ID: ' + response.issueid + '<br>' +
-                            'URL: <a href="' + response.publicurl + '" target="_blank">' + response.publicurl + '</a>'
-                        );
+                    Str.get_string('badgeissued', 'local_issuebadge').done(function(badgeIssuedStr) {
+                        result.removeClass('d-none alert-danger').addClass('alert-success')
+                            .html(
+                                '<strong>' + badgeIssuedStr + '</strong><br>' +
+                                'Issue ID: ' + response.issueid + '<br>' +
+                                'URL: <a href="' + response.publicurl + '" target="_blank">' + response.publicurl + '</a>'
+                            );
 
-                    // Reset form.
-                    $('#badge_id').val('');
-                    $('#user_id').val('');
+                        // Reset form.
+                        $('#badge_id').val('');
+                        $('#user_id').val('');
 
-                    Notification.addNotification({
-                        message: M.util.get_string('badgeissued', 'local_issuebadge'),
-                        type: 'success'
+                        Notification.addNotification({
+                            message: badgeIssuedStr,
+                            type: 'success'
+                        });
                     });
                 } else {
-                    result.removeClass('d-none alert-success').addClass('alert-danger')
-                        .text(M.util.get_string('error_issuefailed', 'local_issuebadge') + ': ' + response.error);
+                    Str.get_string('error_issuefailed', 'local_issuebadge').done(function(errorStr) {
+                        result.removeClass('d-none alert-success').addClass('alert-danger')
+                            .text(errorStr + ': ' + response.error);
+                    });
                 }
 
             }).fail(function(ex) {
                 button.prop('disabled', false);
                 spinner.addClass('d-none');
-                result.removeClass('d-none alert-success').addClass('alert-danger')
-                    .text(M.util.get_string('error_api', 'local_issuebadge'));
+                Str.get_string('error_api', 'local_issuebadge').done(function(errorStr) {
+                    result.removeClass('d-none alert-success').addClass('alert-danger').text(errorStr);
+                });
                 Notification.exception(ex);
             });
         }

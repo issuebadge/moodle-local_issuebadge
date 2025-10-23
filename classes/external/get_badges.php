@@ -92,7 +92,10 @@ class get_badges extends external_api {
                 new external_single_structure([
                     'id' => new external_value(PARAM_TEXT, 'Badge ID'),
                     'name' => new external_value(PARAM_TEXT, 'Badge name'),
-                ])
+                ]),
+                'List of available badges',
+                VALUE_DEFAULT,
+                []
             ),
             'error' => new external_value(PARAM_TEXT, 'Error message', VALUE_OPTIONAL),
         ]);

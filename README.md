@@ -29,6 +29,7 @@ IssueBadge for Moodle allows educators and administrators to issue professional 
 - 📱 **Responsive**: Works on all devices
 - ⚡ **AJAX**: Real-time badge loading and issuance without page reloads
 - 🎨 **Moodle UI**: Integrated seamlessly with Moodle's admin interface
+- 🎭 **Modern Templates**: Uses Mustache templates and Output API (Moodle 4.x standard)
 
 ## Requirements
 
@@ -54,6 +55,15 @@ IssueBadge for Moodle allows educators and administrators to issue professional 
 2. Copy the `issuebadge` folder to `/local/` directory in your Moodle installation
 3. Visit **Site administration → Notifications** to complete the installation
 4. Configure the plugin settings
+
+### Method 3: Git Clone (For Developers)
+
+```bash
+cd /path/to/moodle/local
+git clone https://github.com/issuebadge/moodle-local_issuebadge.git issuebadge
+```
+
+**Note**: The repository follows Moodle's naming convention `moodle-{plugintype}_{pluginname}` (i.e., `moodle-local_issuebadge`), but must be cloned into a folder named `issuebadge` to match Moodle's expected plugin directory structure.
 
 ## Configuration
 
@@ -170,6 +180,57 @@ See Privacy Policy: [issuebadge.com/privacy](https://issuebadge.com/privacy)
 - Can be used by other plugins to react to badge issuance
 
 ## Development
+
+### Modern Architecture
+
+This plugin follows Moodle 4.x best practices:
+
+- **Templates**: Mustache templates for all UI components
+- **Output API**: Renderable/templatable classes for clean separation
+- **AMD JavaScript**: Modern JavaScript with `core/str` module
+- **Pagination**: Efficient data loading with proper pagination
+
+For detailed template documentation, see [TEMPLATES_GUIDE.md](TEMPLATES_GUIDE.md).
+
+### Building JavaScript Files
+
+This plugin includes AMD JavaScript modules that require building/minification. The built files are already included in the repository.
+
+**If you modify JavaScript files**, you must rebuild them:
+
+```bash
+# From Moodle root directory
+npx grunt amd --root=local/issuebadge
+```
+
+For detailed instructions, see [BUILDING_JS.md](BUILDING_JS.md).
+
+### Customizing Templates
+
+Themes can override any template by creating:
+
+```
+theme/yourtheme/templates/local_issuebadge/{template_name}.mustache
+```
+
+Available templates:
+- `management_dashboard.mustache` - Management dashboard
+- `issue_form.mustache` - Badge issuance form
+- `issued_badges_table.mustache` - Issued badges table
+
+### Repository Naming Convention
+
+This plugin follows the Moodle plugin repository naming convention:
+
+- **Repository name**: `moodle-local_issuebadge`
+- **Pattern**: `moodle-{plugintype}_{pluginname}`
+- **Installation directory**: `/local/issuebadge/`
+
+This naming convention:
+- Makes it clear that it's a Moodle plugin
+- Identifies the plugin type (`local`) and name (`issuebadge`)
+- Provides a consistent experience for Moodle developers
+- Follows best practices documented at [Moodle Developer Docs](https://moodledev.io/general/development/policies/codingstyle/frankenstyle#code-repository-name)
 
 ### File Structure
 

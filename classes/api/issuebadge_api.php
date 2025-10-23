@@ -70,13 +70,13 @@ class issuebadge_api {
             ],
         ];
 
-        if ($method === 'POST') {
-            $options['CURLOPT_POST'] = true;
-            $options['CURLOPT_POSTFIELDS'] = json_encode($data);
-        }
-
         $curl = new \curl();
-        $response = $curl->post($url, json_encode($data), $options);
+
+        if ($method === 'POST') {
+            $response = $curl->post($url, json_encode($data), $options);
+        } else {
+            $response = $curl->get($url, [], $options);
+        }
 
         // Check for cURL errors.
         if ($curl->get_errno()) {
@@ -159,11 +159,6 @@ class issuebadge_api {
      * @return string UUID v4
      */
     private function generate_uuid() {
-        // Use Moodle's built-in UUID generator if available (Moodle 3.9+).
-        if (function_exists('wp_generate_uuid4')) {
-            return wp_generate_uuid4();
-        }
-
         // Fallback UUID v4 generation.
         $data = random_bytes(16);
         $data[6] = chr(ord($data[6]) & 0x0f | 0x40);

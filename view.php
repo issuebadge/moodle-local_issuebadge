@@ -27,6 +27,8 @@ require_once($CFG->libdir . '/tablelib.php');
 
 $userid = optional_param('userid', 0, PARAM_INT);
 $courseid = optional_param('courseid', 0, PARAM_INT);
+$page = optional_param('page', 0, PARAM_INT);
+$perpage = optional_param('perpage', 25, PARAM_INT);
 
 require_login();
 
@@ -71,35 +73,41 @@ if ($courseid > 0) {
 
 $sql .= " ORDER BY i.timecreated DESC";
 
-$issues = $DB->get_records_sql($sql, $params);
+// Get total count for pagination.
+$countsql = "SELECT COUNT(i.id)
+             FROM {local_issuebadge_issues} i
+             WHERE 1=1";
 
-if (empty($issues)) {
-    echo html_writer::tag('p', get_string('nobadges', 'local_issuebadge'));
-} else {
-    // Create table.
-    $table = new html_table();
-    $table->head = [
-        get_string('recipientname', 'local_issuebadge'),
-        get_string('recipientemail', 'local_issuebadge'),
-        get_string('course'),
-        get_string('badge', 'local_issuebadge'),
-        get_string('issuedate', 'local_issuebadge'),
-        get_string('publicurl', 'local_issuebadge'),
-    ];
-
-    foreach ($issues as $issue) {
-        $row = [];
-        $row[] = fullname($issue);
-        $row[] = $issue->email;
-        $row[] = $issue->coursename ? $issue->coursename : '-';
-        $row[] = $issue->badge_id;
-        $row[] = userdate($issue->timecreated);
-        $row[] = html_writer::link($issue->public_url, get_string('view'), ['target' => '_blank']);
-
-        $table->data[] = $row;
-    }
-
-    echo html_writer::table($table);
+if ($userid > 0) {
+    $countsql .= " AND i.userid = :userid";
 }
+
+if ($courseid > 0) {
+    $countsql .= " AND i.courseid = :courseid";
+}
+
+$totalcount = $DB->count_records_sql($countsql, $params);
+
+// Get records for current page.
+$issues = [];
+$paginationhtml = '';
+
+if ($totalcount > 0) {
+    $issues = $DB->get_records_sql($sql, $params, $page * $perpage, $perpage);
+
+    // Generate pagination HTML.
+    $baseurl = new moodle_url('/local/issuebadge/view.php', [
+        'userid' => $userid,
+        'courseid' => $courseid,
+        'perpage' => $perpage,
+    ]);
+
+    $paginationhtml = $OUTPUT->paging_bar($totalcount, $page, $perpage, $baseurl);
+}
+
+// Render table using template.
+$badgestable = new \local_issuebadge\output\issued_badges_table($issues, $paginationhtml);
+$renderer = $PAGE->get_renderer('local_issuebadge');
+echo $renderer->render($badgestable);
 
 echo $OUTPUT->footer();
