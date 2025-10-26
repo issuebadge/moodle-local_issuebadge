@@ -23,7 +23,6 @@
  */
 
 namespace local_issuebadge\output;
-
 defined('MOODLE_INTERNAL') || die();
 
 use plugin_renderer_base;
@@ -32,7 +31,6 @@ use plugin_renderer_base;
  * Renderer class for IssueBadge plugin
  */
 class renderer extends plugin_renderer_base {
-
     /**
      * Render the management dashboard
      *

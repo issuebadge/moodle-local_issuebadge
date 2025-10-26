@@ -23,7 +23,6 @@
  */
 
 namespace local_issuebadge\output;
-
 defined('MOODLE_INTERNAL') || die();
 
 use renderable;
@@ -35,7 +34,6 @@ use stdClass;
  * Management dashboard renderable class
  */
 class management_dashboard implements renderable, templatable {
-
     /**
      * Export data for template
      *

@@ -23,7 +23,6 @@
  */
 
 namespace local_issuebadge\output;
-
 defined('MOODLE_INTERNAL') || die();
 
 use renderable;
@@ -35,7 +34,6 @@ use stdClass;
  * Issued badges table renderable class
  */
 class issued_badges_table implements renderable, templatable {
-
     /** @var array Badge issues */
     protected $issues;
 

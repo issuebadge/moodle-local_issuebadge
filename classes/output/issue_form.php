@@ -23,7 +23,6 @@
  */
 
 namespace local_issuebadge\output;
-
 defined('MOODLE_INTERNAL') || die();
 
 use renderable;
@@ -36,7 +35,6 @@ use context_course;
  * Issue form renderable class
  */
 class issue_form implements renderable, templatable {
-
     /** @var int Course ID */
     protected $courseid;
 
