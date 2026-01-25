@@ -1,0 +1,11 @@
+Release Notes
+
+== 2.0.1 (2026012500) ==
+- New: Badge caching with "Refresh from API" feature
+- New: Course configuration page for auto-issue triggers
+- New: Course completion trigger with grade threshold
+- New: Quiz grade trigger with passing percentage
+- New: External recipient support (issue to name + email)
+- New: Improved dashboard with stats and help section
+- New: Configured courses list in dashboard
+- Improved: Better UI/UX throughout the plugin

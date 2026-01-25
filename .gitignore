@@ -1,0 +1,21 @@
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Compiled JavaScript (keep source in amd/src/)
+amd/build/
+
+# PHPUnit
+/vendor/
+phpunit.xml
+
+# Backup files
+*.bak
+*.backup
